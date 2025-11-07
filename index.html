@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=https://discord.gg/yEXtuQyAT8">
+    <!-- Meta refresh will be added by JavaScript if on correct path -->
     <title>Redirecting to Discord...</title>
     <style>
         body {
@@ -53,8 +53,25 @@
     </div>
 
     <script>
-        // Immediate JavaScript redirect as backup
-        window.location.href = "https://discord.gg/yEXtuQyAT8";
+        // Only redirect if we're on the /sdp path
+        if (window.location.pathname === '/sdp' || window.location.pathname === '/sdp/') {
+            // Add meta refresh for browsers that don't support JavaScript
+            const metaRefresh = document.createElement('meta');
+            metaRefresh.setAttribute('http-equiv', 'refresh');
+            metaRefresh.setAttribute('content', '0; url=https://discord.gg/yEXtuQyAT8');
+            document.head.appendChild(metaRefresh);
+            
+            // Immediate JavaScript redirect
+            window.location.href = "https://discord.gg/yEXtuQyAT8";
+        } else {
+            // If not on /sdp path, hide redirect message and show error
+            document.querySelector('.redirect-message').innerHTML = `
+                <h1>Page Not Found</h1>
+                <p>This redirect only works from the /sdp path.</p>
+                <p>You are currently on: ${window.location.pathname}</p>
+                <p>Please visit <a href="/sdp" class="discord-link">republicofjulia.org/sdp</a> for the Discord redirect.</p>
+            `;
+        }
     </script>
 </body>
 </html>
