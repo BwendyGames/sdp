@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta refresh will be added by JavaScript if on correct path -->
+    <title>Redirecting to Discord...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f5f5f5;
+        }
+        .redirect-message {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .discord-link {
+            color: #5865F2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .discord-link:hover {
+            text-decoration: underline;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #5865F2;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-message">
+        <h1>Redirecting to Discord...</h1>
+        <div class="spinner"></div>
+        <p>You are being automatically redirected to our Discord server.</p>
+        <p>If you are not redirected automatically, please click the link below:</p>
+        <p><a href="https://discord.gg/yEXtuQyAT8" class="discord-link">Join our Discord Server</a></p>
+    </div>
+
+    <script>
+        // Only redirect if we're on the /sdp path
+        if (window.location.pathname === '/sdp' || window.location.pathname === '/sdp/') {
+            // Add meta refresh for browsers that don't support JavaScript
+            const metaRefresh = document.createElement('meta');
+            metaRefresh.setAttribute('http-equiv', 'refresh');
+            metaRefresh.setAttribute('content', '0; url=https://discord.gg/yEXtuQyAT8');
+            document.head.appendChild(metaRefresh);
+            
+            // Immediate JavaScript redirect
+            window.location.href = "https://discord.gg/yEXtuQyAT8";
+        } else {
+            // If not on /sdp path, hide redirect message and show error
+            document.querySelector('.redirect-message').innerHTML = `
+                <h1>Page Not Found</h1>
+                <p>This redirect only works from the /sdp path.</p>
+                <p>You are currently on: ${window.location.pathname}</p>
+                <p>Please visit <a href="/sdp" class="discord-link">republicofjulia.org/sdp</a> for the Discord redirect.</p>
+            `;
+        }
+    </script>
+</body>
+</html>

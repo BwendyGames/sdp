@@ -3,75 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Meta refresh will be added by JavaScript if on correct path -->
-    <title>Redirecting to Discord...</title>
+    <title>Republic of Julia - Discord Political Sim</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
         }
-        .redirect-message {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            max-width: 500px;
+
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
-        .discord-link {
-            color: #5865F2;
-            text-decoration: none;
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            color: white;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .main-content {
+            background: #1e1e2f;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid #2a2a3e;
+        }
+
+        .hero-section {
+            padding: 50px 40px;
+            text-align: center;
+            background: linear-gradient(45deg, #6a5acd 0%, #483d8b 50%, #2e2c7a 100%);
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             font-weight: bold;
         }
-        .discord-link:hover {
-            text-decoration: underline;
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
-        .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #5865F2;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: #5865F2;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #5865F2;
+        }
+
+        .btn-secondary:hover {
+            background: #5865F2;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 50px 40px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            background: #2a2a3e;
+            transition: transform 0.3s ease;
+            border: 1px solid #3a3a4e;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            background: #3a3a4e;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .feature-description {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        .events-section {
+            background: linear-gradient(135deg, #2d1b69 0%, #11998e 50%, #38ef7d 100%);
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .events-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .event-card {
+            background: #1e1e2f;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border: 1px solid #2a2a3e;
+        }
+
+        .event-emoji {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .event-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .event-desc {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 250px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="redirect-message">
-        <h1>Redirecting to Discord...</h1>
-        <div class="spinner"></div>
-        <p>You are being automatically redirected to our Discord server.</p>
-        <p>If you are not redirected automatically, please click the link below:</p>
-        <p><a href="https://discord.gg/yEXtuQyAT8" class="discord-link">Join our Discord Server</a></p>
+    <div class="container">
+        <header>
+            <div class="logo">🏛️ Republic of Julia</div>
+        </header>
+
+        <div class="main-content">
+            <div class="hero-section">
+                <h1 class="hero-title">Welcome to Julia!</h1>
+                <p class="hero-subtitle">
+                    Join the most immersive political simulation on Discord! Build your political career, 
+                    participate in thrilling events, and shape the future of our virtual nation.
+                </p>
+                <div class="cta-buttons">
+                    <a href="https://discord.gg/qyQ8wKmrEU" class="btn btn-primary" target="_blank">
+                        🎮 Join Server
+                    </a>
+                    <a href="https://wiki.republicofjulia.org" class="btn btn-secondary" target="_blank">
+                        📚 Read Wiki
+                    </a>
+                </div>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🗳️</div>
+                    <h3 class="feature-title">Democratic Gameplay</h3>
+                    <p class="feature-description">
+                        Run for office, vote in elections, and participate in the democratic process. 
+                        Your voice matters in shaping Julia's future!
+                    </p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🏛️</div>
+                    <h3 class="feature-title">Political Parties</h3>
+                    <p class="feature-description">
+                        Join or create political parties, develop platforms, and work together 
+                        to achieve your legislative goals.
+                    </p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💼</div>
+                    <h3 class="feature-title">Government Roles</h3>
+                    <p class="feature-description">
+                        Serve as President, Senator, Supreme Court Justice, or in various 
+                        executive departments and ministries.
+                    </p>
+                </div>
+            </div>
+
+            <div class="events-section">
+                <h2 class="events-title">🎉 Exciting Events & Activities</h2>
+                <p>Members come from any and every timezone to participate in our events!</p>
+                
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-emoji">🦑</div>
+                        <h4 class="event-name">Squid Games</h4>
+                        <p class="event-desc">Compete in deadly challenges for prizes and gift cards!</p>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-emoji">🎤</div>
+                        <h4 class="event-name">Last to Leave VC</h4>
+                        <p class="event-desc">Test your endurance in voice chat for prizes and gift cards!</p>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-emoji">🎪</div>
+                        <h4 class="event-name">Special Events</h4>
+                        <p class="event-desc">Regular themed events, contests, and community activities to keep things fun!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Republic of Julia. A Discord Political Simulation Community.</p>
+            <p>Ready to start your political journey? <a href="https://discord.gg/qyQ8wKmrEU" style="color: #fff; text-decoration: underline;">Join us today!</a></p>
+        </footer>
     </div>
 
     <script>
-        // Only redirect if we're on the /sdp path
-        if (window.location.pathname === '/sdp' || window.location.pathname === '/sdp/') {
-            // Add meta refresh for browsers that don't support JavaScript
-            const metaRefresh = document.createElement('meta');
-            metaRefresh.setAttribute('http-equiv', 'refresh');
-            metaRefresh.setAttribute('content', '0; url=https://discord.gg/yEXtuQyAT8');
-            document.head.appendChild(metaRefresh);
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate feature cards on scroll
+            const features = document.querySelectorAll('.feature, .event-card');
             
-            // Immediate JavaScript redirect
-            window.location.href = "https://discord.gg/yEXtuQyAT8";
-        } else {
-            // If not on /sdp path, hide redirect message and show error
-            document.querySelector('.redirect-message').innerHTML = `
-                <h1>Page Not Found</h1>
-                <p>This redirect only works from the /sdp path.</p>
-                <p>You are currently on: ${window.location.pathname}</p>
-                <p>Please visit <a href="/sdp" class="discord-link">republicofjulia.org/sdp</a> for the Discord redirect.</p>
-            `;
-        }
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            features.forEach(feature => {
+                feature.style.opacity = '0';
+                feature.style.transform = 'translateY(20px)';
+                feature.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(feature);
+            });
+        });
     </script>
 </body>
 </html>
